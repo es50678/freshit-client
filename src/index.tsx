@@ -1,8 +1,39 @@
+import ApolloClient from 'apollo-client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { App } from './components';
 import * as serviceWorker from './serviceWorker';
+import gql from 'graphql-tag';
+import { App } from './components';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: 'http://localhost:4000',
+  headers: {
+    authorization: localStorage.getItem('token')
+  }
+});
+
+const client = new ApolloClient<NormalizedCacheObject>({
+  cache,
+  link
+});
+
+client
+  .query({
+    query: gql`
+      {
+        userByEmail(email: "benson.willems@gmail.com") {
+          id
+          email
+          name
+        }
+      }
+    `
+  })
+  .then(result => console.log(result));
 
 ReactDOM.render(
   <React.StrictMode>
