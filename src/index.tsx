@@ -4,7 +4,6 @@ import ApolloClient from 'apollo-client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { App } from './components';
 import { HttpLink } from 'apollo-link-http';
