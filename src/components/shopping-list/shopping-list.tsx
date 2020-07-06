@@ -1,5 +1,4 @@
 import React from "react";
-import 'bootstrap';
 
 interface Props {
   name: string

@@ -5,9 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import * as serviceWorker from './serviceWorker';
-import { App } from './components';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { Routes } from './routes';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -24,7 +24,7 @@ const client = new ApolloClient<NormalizedCacheObject>({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App className="container-fluid" />
+    <Routes />
   </ApolloProvider>,
   document.getElementById('root')
 );
