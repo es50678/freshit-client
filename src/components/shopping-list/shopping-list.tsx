@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap';
 
 interface Props {
   name: string
@@ -9,10 +10,10 @@ export class ShoppingList extends React.Component<Props> {
     return (
       <div className="shopping-list">
         <h1>Shopping List for {this.props.name}</h1>
-        <ul>
-          <li>Instagram</li>
-          <li>WhatsApp</li>
-          <li>Oculus</li>
+        <ul className="list-group">
+          <li className="list-group-item">Instagram</li>
+          <li className="list-group-item">WhatsApp</li>
+          <li className="list-group-item">Oculus</li>
         </ul>
       </div>
     );

@@ -1,10 +1,11 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ApolloClient from 'apollo-client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import gql from 'graphql-tag';
 import { App } from './components';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
@@ -21,20 +22,6 @@ const client = new ApolloClient<NormalizedCacheObject>({
   cache,
   link
 });
-
-client
-  .query({
-    query: gql`
-      {
-        userByEmail(email: "benson.willems@gmail.com") {
-          id
-          email
-          name
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));
 
 ReactDOM.render(
   <ApolloProvider client={client}>
