@@ -2,9 +2,15 @@ import React from 'react';
 
 import { ShoppingList } from '../shopping-list';
 
-function App() {
+interface Props {
+  className?: string; // custom classes
+}
+
+const App: React.FC<Props> = function (props) {
+  const classes = `App ${props.className}`;
+
   return (
-    <div className="App">
+    <div className={classes}>
       <ShoppingList name="James" />
     </div>
   );
