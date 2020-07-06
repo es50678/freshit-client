@@ -1,0 +1,72 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Category {
+  "category may have durations - if no durations exist, will return empty string"
+  durations: [Duration]!
+  id: ID!
+  name: String!
+  "category must always have a user"
+  user: User!
+}
+
+type Duration {
+  "duration must always be part of a category"
+  category: Category!
+  "unix timestamp(seconds) of end of duration"
+  end: DateTime
+  id: ID!
+  "length of duration string in the iso 8601 format"
+  length: TimeDuration
+  "unix timestamp(seconds) of the start of duration"
+  start: DateTime!
+  "duration must always have a user"
+  user: User!
+}
+
+type Mutation {
+  "requires authentication"
+  createCategory(name: String!): Category
+  createUser(email: String!, name: String!, passcode: String!): User
+  "requires authentication"
+  endDuration(end: DateTime!, id: ID!): Duration!
+  login(email: String!, passcode: String!): String!
+  "requires authentication"
+  startDuration(categoryID: String!, start: DateTime!): Duration!
+}
+
+type Query {
+  category(id: ID!): Category
+  duration(id: ID!): Duration
+  user(id: ID!): User
+  userByEmail(email: String!): User
+}
+
+type User {
+  "user may have categories - if no categories exist, will return empty string"
+  categories: [Category]!
+  "user may have durations - if no durations exist, will return empty string"
+  durations: [Duration]!
+  email: String!
+  id: ID!
+  name: String!
+}
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
+}
+
+
+"Custom TimeDuration scalar type - an ISO 8601 formatted duration string"
+scalar TimeDuration
+
+"Custom DateTime scalar type - A unix timestamp in seconds"
+scalar DateTime
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
