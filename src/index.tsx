@@ -1,6 +1,7 @@
 import ApolloClient from 'apollo-client';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloProvider } from '@apollo/react-hooks';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import gql from 'graphql-tag';
@@ -36,9 +37,9 @@ client
   .then(result => console.log(result));
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
