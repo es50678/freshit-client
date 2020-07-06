@@ -24,7 +24,9 @@ const client = new ApolloClient<NormalizedCacheObject>({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Routes />
+    <div className="container-fluid">
+      <Routes />
+    </div>
   </ApolloProvider>,
   document.getElementById('root')
 );
