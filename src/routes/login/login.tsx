@@ -1,8 +1,19 @@
 import React, { FormEvent, useState } from 'react';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+
+const LOGIN_USER = gql`
+  mutation loginUser($email: String! $passcode: String!){
+    login(email: $email passcode: $passcode)
+  }
+`
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [login, test] = useMutation(LOGIN_USER);
+
+  console.log(test);
 
   const handleEmailChange = (event: FormEvent<HTMLInputElement>) => {
     setEmail(event.currentTarget.value);
@@ -10,6 +21,10 @@ export function Login() {
 
   const handlePasswordChange = (event: FormEvent<HTMLInputElement>) => {
     setPassword(event.currentTarget.value);
+  }
+
+  const handleLoginClick = async () => {
+    return login({ variables: { email, passcode: password } })
   }
 
   return (
@@ -36,7 +51,13 @@ export function Login() {
               value={password}
             />
           </div>
-          <button type="button" className="btn btn-primary">Login</button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleLoginClick}
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
