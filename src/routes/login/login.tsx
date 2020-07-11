@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
 const LOGIN_USER = gql`
   mutation loginUser($email: String! $passcode: String!){
@@ -9,9 +9,19 @@ const LOGIN_USER = gql`
 `
 
 export function Login() {
+  const client = useApolloClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, test] = useMutation(LOGIN_USER);
+  const [login, test] = useMutation(
+    LOGIN_USER,
+    {
+      onCompleted(result) {
+        localStorage.setItem('authorization_token', 'abc');
+        console.log('client', client);
+        console.log('result', result);
+      }
+    }
+  );
 
   console.log(test);
 

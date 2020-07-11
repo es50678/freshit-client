@@ -7,19 +7,29 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import * as serviceWorker from './serviceWorker';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { setContext } from 'apollo-link-context';
 import { Routes } from './routes';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'http://localhost:4000',
-  headers: {
-    authorization: localStorage.getItem('token')
+  uri: 'http://localhost:4000'
+});
+// sets authorization header on every request
+// https://www.apollographql.com/docs/react/networking/authentication/
+const authLink = setContext((_, { headers }) => {
+  const token= localStorage.getItem('authorization_token');
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token
+    }
   }
 });
 
 const client = new ApolloClient<NormalizedCacheObject>({
   cache,
-  link
+  link: authLink.concat(link)
 });
 
 ReactDOM.render(
