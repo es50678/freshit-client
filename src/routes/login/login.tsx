@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import gql from 'graphql-tag';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 
 const LOGIN_USER = gql`
@@ -9,13 +10,19 @@ const LOGIN_USER = gql`
 `
 
 export function Login() {
+  // react hooks
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // router hooks
+  const history = useHistory();
+  // apollo hooks
   const [login] = useMutation(
     LOGIN_USER,
     {
       onCompleted(result) {
         localStorage.setItem('authorization_token', result.login);
+
+        history.push('/');
       }
     }
   );
@@ -28,14 +35,16 @@ export function Login() {
     setPassword(event.currentTarget.value);
   }
 
-  const handleLoginClick = async () => {
+  const handleSubmission = async (event: FormEvent) => {
+    event.preventDefault();
+
     return login({ variables: { email, passcode: password } })
   }
 
   return (
     <div className="row h-100 align-items-center">
       <div className="col">
-        <form action="" method="">
+        <form action="" method="" onSubmit={handleSubmission}>
           <div className="form-group">
             <label htmlFor="emailInput">Email Address</label>
             <input
@@ -56,11 +65,7 @@ export function Login() {
               value={password}
             />
           </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleLoginClick}
-          >
+          <button className="btn btn-primary">
             Login
           </button>
         </form>
