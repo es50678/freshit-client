@@ -9,6 +9,10 @@ const LOGIN_USER = gql`
   }
 `
 
+/**
+ * Simple login form.
+ * Sets request authorization header to login value when response is received from server
+ */
 export function Login() {
   // react hooks
   const [email, setEmail] = useState("");
@@ -22,7 +26,7 @@ export function Login() {
       onCompleted(result) {
         localStorage.setItem('authorization_token', result.login);
 
-        history.push('/');
+        history.push('/dashboard');
       }
     }
   );
